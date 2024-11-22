@@ -1,0 +1,26 @@
+digraph {
+	graph [size="12,12"]
+	node [align=left fontsize=12 height=0.2 ranksep=0.1 shape=box style=filled]
+	1762036132816 [label="Implies
+(x <= 40.0) => (♢ [0, 60]( ◻ [0, 10]( w <= 300.0 ) ))" fillcolor=orange]
+	1762187851984 -> 1762036132816
+	1762187851984 [label="LessThan
+x <= 40.0" fillcolor=orange]
+	140709976957256 -> 1762187851984
+	140709976957256 [label=x fillcolor=lightcoral]
+	1762187855632 -> 1762187851984
+	1762187855632 [label=40.0 fillcolor=palegreen]
+	1762035251856 -> 1762036132816
+	1762035251856 [label="Eventually
+♢ [0, 60]( ◻ [0, 10]( w <= 300.0 ) )" fillcolor=orange]
+	1762035489680 -> 1762035251856
+	1762035489680 [label="Always
+◻ [0, 10]( w <= 300.0 )" fillcolor=orange]
+	1762187840912 -> 1762035489680
+	1762187840912 [label="LessThan
+w <= 300.0" fillcolor=orange]
+	140709977159392 -> 1762187840912
+	140709977159392 [label=w fillcolor=lightcoral]
+	1762187862448 -> 1762187840912
+	1762187862448 [label=300.0 fillcolor=palegreen]
+}

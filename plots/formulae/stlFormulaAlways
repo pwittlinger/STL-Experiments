@@ -1,0 +1,16 @@
+digraph {
+	graph [size="12,12"]
+	node [align=left fontsize=12 height=0.2 ranksep=0.1 shape=box style=filled]
+	2593589704656 [label="Negation
+¬(♢ [0, inf]( x >= input ))" fillcolor=orange]
+	2592250704592 -> 2593589704656
+	2592250704592 [label="Eventually
+♢ [0, inf]( x >= input )" fillcolor=orange]
+	2592168342544 -> 2592250704592
+	2592168342544 [label="GreaterThan
+x >= input" fillcolor=orange]
+	140725269455176 -> 2592168342544
+	140725269455176 [label=x fillcolor=lightcoral]
+	2592404058864 -> 2592168342544
+	2592404058864 [label=input fillcolor=lightskyblue]
+}

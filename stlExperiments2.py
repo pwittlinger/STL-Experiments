@@ -19,7 +19,7 @@ import pytz
 from timeit import repeat
 import gc
 
-def plotData(data, dname, colName, figTitle, nobs=3600):
+def plotData(data, colName, figTitle, nobs=3600, dname=dname):
 
     colmap = {"co2":2,
               "temp":3,
@@ -255,13 +255,9 @@ def runAbsence3(formula, data, nobs):
 def isWeekend(dateInDTformat):
     return(dateInDTformat.weekday()>4)
 
-if __name__ == "__main__":
+def dataPreprocessing(pathToData=r"./data/co2_dump151018.csv"):
 
-    #print(dname)
-
-    # loading the data and basic preprocessing
-    # only keeping data that contains floats for measurements + discarding empty rows
-    data = pd.read_csv(r"./data/co2_dump151018.csv", header=None)
+    data = pd.read_csv(pathToData, header=None)
     data = data[np.logical_not(np.logical_not(data[0].str.isnumeric()))]
     bm = data.iloc[:,2].astype(str).str.contains(r'^[\d]+.[\d]+$', regex=True)
     data2 = data[bm]
@@ -274,9 +270,10 @@ if __name__ == "__main__":
     data3 = data2[bm5]
     data = data3.astype("float32")
     data[1] = data3.iloc[:,1].astype('Int64') # Makes handling of unix timestamps easier
+
     #########
     # Removing massive outliers in measurements
-    iqrco2 = (data[2].quantile(.75)-data[2].quantile(.25))
+    #iqrco2 = (data[2].quantile(.75)-data[2].quantile(.25))
     iqrtemp = (data[3].quantile(.75)-data[3].quantile(.25))
     data.sort_values(by=0, inplace=True)
     data.drop(index=[0,1,2], inplace=True)
@@ -288,77 +285,29 @@ if __name__ == "__main__":
     data[7] = data[1].apply(lambda f: datetime.fromtimestamp(f, tz=pytz.timezone("Asia/Jakarta")).strftime("%d-%m-%Y %H:%M:%S"))
     data.iloc[:,7] = data.iloc[:,7].apply(lambda f: datetime.strptime(f, "%d-%m-%Y %H:%M:%S"))
     data.sort_values(1, inplace=True)
+
+    return data
+
+if __name__ == "__main__":
+
+    #print(dname)
+
+    data = dataPreprocessing()
+    # loading the data and basic preprocessing
+    # only keeping data that contains floats for measurements + discarding empty rows
     print("preprocessing done")
     #########################################
-    """
-    # Plotting CO2 for the first hour
-    n = 60*60
-    fig, axs_ = plt.subplots(3)
-    fig.set_figheight(12)
-    fig.set_figwidth(15)
 
-    for k in [0,1,9]:
-        axs_[[0,1,9].index(k)].plot(range(n),data[data[6]==k].iloc[0:n,2], ".-", linewidth=3, markersize=15, label="x")
-        axs_[[0,1,9].index(k)].plot(range(n), np.full(n,300))
-        axs_[[0,1,9].index(k)].set_title(f"First {n} observations for Sensor {k}")
-        
+    plotColumns = ["co2", "temp", "humidity", "light"]
+    pltTitles = [
+        "CO2 Emissions in ppm",
+        "Humidity in %",
+        "Temperature in Degree Celsius",
+        "Light Intensity per Sensor"
+    ]
 
-    #plt.title("CO2 Concentration")
-    fig.suptitle("CO2 Concentration in ppm")
-    fpPlots = os.path.join(dname,"./plots")
-    if np.logical_not(os.path.isdir(fpPlots)):
-        os.mkdir(os.path.join(dname,"/plots"))
-    
-    plt.savefig(os.path.join(fpPlots,"co2ppm.png"))
-    #plt.show()
-    #######################################
-    fig, axs_ = plt.subplots(3)
-    fig.set_figheight(12)
-    fig.set_figwidth(15)
+    [plotData(data, clN, pltTitles[iCn]) for iCn,clN in enumerate(plotColumns)]
 
-    for k in [0,1,9]:
-        axs_[[0,1,9].index(k)].plot(range(n),data[data[6]==k].iloc[0:n,3], ".-", linewidth=3, markersize=15, label="x")
-        axs_[[0,1,9].index(k)].set_title(f"First {n} observations for Sensor {k}")
-        #plt.plot(range(n), np.full(n,300))
-        #axs_[[0,1,9].index(k)].plot(range(n), np.full(n,300))
-
-    #plt.title("CO2 Concentration")
-    fig.suptitle("Temperature by Sensor")
-    #plt.show()
-    #plt.savefig(os.path.join("./plots","temp.png"))
-    plt.savefig(os.path.join(fpPlots,"temp.png"))
-
-    fig, axs_ = plt.subplots(3)
-    fig.set_figheight(12)
-    fig.set_figwidth(15)
-
-    for k in [0,1,9]:
-        axs_[[0,1,9].index(k)].plot(range(n),data[data[6]==k].iloc[0:n,4], ".-", linewidth=3, markersize=15, label="x")
-        axs_[[0,1,9].index(k)].set_title(f"First {n} observations for Sensor {k}")
-        #plt.plot(range(n), np.full(n,300))
-        #axs_[[0,1,9].index(k)].plot(range(n), np.full(n,300))
-
-    #plt.title("CO2 Concentration")
-    fig.suptitle("Humidity in % by Sensor")
-    #plt.show()
-    #plt.savefig(os.path.join("./plots","humidity.png"))
-    plt.savefig(os.path.join(fpPlots,"humidity.png"))
-
-    fig, axs_ = plt.subplots(3)
-    fig.set_figheight(20)
-    fig.set_figwidth(15)
-
-    for k in [0,1,9]:
-        axs_[[0,1,9].index(k)].plot(range(n),np.diff(data[data[6]==k].iloc[0:n+1,1]), "-", linewidth=3, markersize=15, label="x")
-        axs_[[0,1,9].index(k)].set_title(f"First {n} observations for Sensor {k}")
-
-    #plt.title("CO2 Concentration")
-    fig.suptitle("Time lag in Seconds by Sensor")
-    #plt.show()
-    #plt.savefig(os.path.join("./plots","timelag.png"))
-    plt.savefig(os.path.join(fpPlots,"timelag.png"))
-    """
-    print("Plotting done")
 
     ############################################################################
     ######### Splitting the data per Sensor

@@ -141,7 +141,7 @@ def runResponseExperiment4(formula, data, nobs):
     rScaled = np.divide(r,n_experiments)
     if os.path.isdir("./experiments"):
         #if os.path.isfile("./experiments/results.csv"):
-        with open("./experiments/resultsResponse4.csv", "a") as f:
+        with open("./experiments/resultsResponse4Interval5.csv", "a") as f:
             f.write(f"{rScaled};{rScaled.mean()};{rScaled.std()};{n_experiments};{nobs};{rScaled.mean()/nobs}\n")
 
     return True
@@ -331,7 +331,7 @@ if __name__ == "__main__":
 
 
 
-    ############################################################################
+    ####################################################################################################################################################################################################################################
     ########################### Starting with the Experiments
 
     n_obs = [60, 60*60, 60*60*24, 60*60*24*2, 60*60*24*3, 60*60*24*5, 60*60*24*7, 60*60*24*10, 10**6]
@@ -366,9 +366,11 @@ if __name__ == "__main__":
     ϕCo2 = stlcg.GreaterThan(lhs='g', val=d)
 
     formula = stlcg.Implies(subformula1=ϕCo2, subformula2=stlcg.Eventually(ϕBreak, interval=[0,1]))
+    #formula = stlcg.Implies(subformula1=ϕCo2, subformula2=stlcg.Eventually(ϕBreak, interval=[0,2]))
+    #formula = stlcg.Implies(subformula1=ϕCo2, subformula2=stlcg.Eventually(ϕBreak))
     print(formula)
     graph = viz.make_stl_graph(formula)
-    viz.save_graph(graph, "./plots/formulae/stlFormulaResponseDiscrete")
+    #viz.save_graph(graph, "./plots/formulae/stlFormulaResponseDiscrete")
     plt.close("all")
 
     #[runResponse2(formula, dataSensor0, nobs) for nobs in n_obs]
@@ -463,15 +465,15 @@ if __name__ == "__main__":
 
     ϕCo2High = stlcg.GreaterThan(lhs='x', val=c)
     ϕCo2Med = stlcg.LessThan(lhs='x', val=d)
-    formula = stlcg.Implies(subformula1=ϕCo2High, subformula2=stlcg.Eventually(ϕCo2Med, interval=[0,1]))
+    formula = stlcg.Implies(subformula1=ϕCo2High, subformula2=stlcg.Eventually(ϕCo2Med, interval=[0,5]))
 
     print(formula)
     graph = viz.make_stl_graph(formula)
-    viz.save_graph(graph, "./plots/formulae/stlFormulaResponse4")
+    viz.save_graph(graph, "./plots/formulae/stlFormulaResponse1Interval5")
     plt.close("all")
     
 
-    #[runResponseExperiment4(formula, dataSensor0, nobs) for nobs in n_obs]
+    [runResponseExperiment4(formula, dataSensor0, nobs) for nobs in n_obs]
 
     ############################################################################
     ######### Response Test 4 :  Response on same signal with bounded Interval (similar to Response Test 1 but interval=[0,1])

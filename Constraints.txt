@@ -1,0 +1,6 @@
+Absence[0,m](x[t]>1000)
+Absence[0,m](x[t]>1000) ∧ Absence[0,m](x[t]<150)
+Absence[0,m](x[t]>1000) ∧ Absence[0,m](y[t]>40)
+Response[0,m],[0,m](x[t]>1000, x[t]<400)
+Response[0,m],[0,1](x[t]>500,dis(d[t]))
+Response[0,m],[0,60](h[t]<40, G[0,10](x[t]>300))

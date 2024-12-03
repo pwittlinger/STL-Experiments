@@ -161,7 +161,7 @@ class Parser:
         comparator = '=' if (isDiscrete) else param_primitives_list[0][1]
         constant = 1 if (isDiscrete) else param_primitives_list[0][2]
 
-        k = torch.tensor(float(constant), dtype=torch.float, requires_grad=True)
+        k = torch.tensor(float(constant), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable, comparator, constant)
 
         #f2 = stlcg.Eventually(subformula=f1, interval=[ int(interval_list[0][0]), int(interval_list[0][1])] )
@@ -177,7 +177,7 @@ class Parser:
         comparator = '=' if isDiscrete else param_primitives_list[0][1]
         constant = 1 if isDiscrete else param_primitives_list[0][2]
 
-        k = torch.tensor(float(constant), dtype=torch.float, requires_grad=True)
+        k = torch.tensor(float(constant), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable, comparator, constant)
 
         f2 = stlcg.Always(subformula=f1, interval=self.stlcg_interval_helper(interval_list[0][0], interval_list[0][1]))
@@ -192,7 +192,7 @@ class Parser:
         comparator_a = '=' if isDiscrete_a else param_primitives_list[0][1]
         constant_a = 1 if isDiscrete_a else param_primitives_list[0][2]
 
-        k_a = torch.tensor(float(constant_a), dtype=torch.float, requires_grad=True)
+        k_a = torch.tensor(float(constant_a), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable_a, comparator_a, constant_a)
 
         isDiscrete_r = len(param_primitives_list[1]) == 1
@@ -200,7 +200,7 @@ class Parser:
         comparator_r = '=' if isDiscrete_r else param_primitives_list[1][1]
         constant_r = 1 if isDiscrete_r else param_primitives_list[1][2]
 
-        k_r = torch.tensor(float(constant_r), dtype=torch.float, requires_grad=True)
+        k_r = torch.tensor(float(constant_r), dtype=torch.float, requires_grad=False)
         f2 = self.stlcg_term_helper(variable_r, comparator_r, constant_r)
 
         f3 = stlcg.Always(subformula=f1, interval=self.stlcg_interval_helper(interval_list[0][0], interval_list[0][1]))
@@ -215,7 +215,7 @@ class Parser:
         comparator_a = '=' if isDiscrete_a else param_primitives_list[0][1]
         constant_a = 1 if isDiscrete_a else param_primitives_list[0][2]
 
-        k_a = torch.tensor(float(constant_a), dtype=torch.float, requires_grad=True)
+        k_a = torch.tensor(float(constant_a), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable_a, comparator_a, constant_a)
 
         isDiscrete_r = len(param_primitives_list[1]) == 1
@@ -223,7 +223,7 @@ class Parser:
         comparator_r = '=' if isDiscrete_r else param_primitives_list[1][1]
         constant_r = 1 if isDiscrete_r else param_primitives_list[1][2]
 
-        k_r = torch.tensor(float(constant_r), dtype=torch.float, requires_grad=True)
+        k_r = torch.tensor(float(constant_r), dtype=torch.float, requires_grad=False)
         f2 = self.stlcg_term_helper(variable_r, comparator_r, constant_r)
 
         f3 = stlcg.Eventually(subformula=f1, interval=self.stlcg_interval_helper(interval_list[0][0], interval_list[0][1]))
@@ -238,7 +238,7 @@ class Parser:
         comparator_1 = '=' if isDiscrete_1 else param_primitives_list[0][1]
         constant_1 = 1 if isDiscrete_1 else param_primitives_list[0][2]
 
-        k_1 = torch.tensor(float(constant_1), dtype=torch.float, requires_grad=True)
+        k_1 = torch.tensor(float(constant_1), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable_1, comparator_1, constant_1)
 
         isDiscrete_2 = len(param_primitives_list[1]) == 1
@@ -246,7 +246,7 @@ class Parser:
         comparator_2 = '=' if isDiscrete_2 else param_primitives_list[1][1]
         constant_2 = 1 if isDiscrete_2 else param_primitives_list[1][2]
 
-        k_2 = torch.tensor(float(constant_2), dtype=torch.float, requires_grad=True)
+        k_2 = torch.tensor(float(constant_2), dtype=torch.float, requires_grad=False)
         f2 = self.stlcg_term_helper(variable_2, comparator_2, constant_2)
 
         f3 = stlcg.Eventually(subformula=f1, interval=self.stlcg_interval_helper(interval_list[0][0], interval_list[0][1]))
@@ -265,7 +265,7 @@ class Parser:
         comparator_1 = '=' if isDiscrete_1 else param_primitives_list[0][1]
         constant_1 = 1 if isDiscrete_1 else param_primitives_list[0][2]
 
-        k_1 = torch.tensor(float(constant_1), dtype=torch.float, requires_grad=True)
+        k_1 = torch.tensor(float(constant_1), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable_1, comparator_1, constant_1)
 
         isDiscrete_2 = len(param_primitives_list[1]) == 1
@@ -273,7 +273,7 @@ class Parser:
         comparator_2 = '=' if isDiscrete_2 else param_primitives_list[1][1]
         constant_2 = 1 if isDiscrete_2 else param_primitives_list[1][2]
 
-        k_2 = torch.tensor(float(constant_2), dtype=torch.float, requires_grad=True)
+        k_2 = torch.tensor(float(constant_2), dtype=torch.float, requires_grad=False)
         f2 = self.stlcg_term_helper(variable_2, comparator_2, constant_2)
 
         f3 = stlcg.Eventually(subformula=f1, interval=self.stlcg_interval_helper(interval_list[0][0], interval_list[0][1]))
@@ -288,7 +288,7 @@ class Parser:
         comparator = '=' if isDiscrete else param_primitives_list[0][1]
         constant = 1 if isDiscrete else param_primitives_list[0][2]
 
-        k = torch.tensor(float(constant), dtype=torch.float, requires_grad=True)
+        k = torch.tensor(float(constant), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable, comparator, constant)
         f2 = stlcg.Eventually(subformula=f1, interval=self.stlcg_interval_helper(interval_list[0][0], interval_list[0][1]))
 
@@ -301,7 +301,7 @@ class Parser:
         comparator = '=' if isDiscrete else param_primitives_list[0][1]
         constant = 1 if isDiscrete else param_primitives_list[0][2]
 
-        k = torch.tensor(float(constant), dtype=torch.float, requires_grad=True)
+        k = torch.tensor(float(constant), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable, comparator, constant)
 
 
@@ -317,7 +317,7 @@ class Parser:
         comparator_a = '=' if isDiscrete_a else param_primitives_list[0][1]
         constant_a = 1 if isDiscrete_a else param_primitives_list[0][2]
 
-        k_a = torch.tensor(float(constant_a), dtype=torch.float, requires_grad=True)
+        k_a = torch.tensor(float(constant_a), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable_a, comparator_a, constant_a)
 
         isDiscrete_r = len(param_primitives_list[1]) == 1
@@ -325,7 +325,7 @@ class Parser:
         comparator_r = '=' if isDiscrete_r else param_primitives_list[1][1]
         constant_r = 1 if isDiscrete_r else param_primitives_list[1][2]
 
-        k_r = torch.tensor(float(constant_r), dtype=torch.float, requires_grad=True)
+        k_r = torch.tensor(float(constant_r), dtype=torch.float, requires_grad=False)
         f2 = self.stlcg_term_helper(variable_r, comparator_r, constant_r)
 
         f3 = stlcg.Always(subformula=f1, interval=self.stlcg_interval_helper(interval_list[0][0], interval_list[0][1]))
@@ -340,7 +340,7 @@ class Parser:
         comparator_1 = '=' if isDiscrete_1 else param_primitives_list[0][1]
         constant_1 = 1 if isDiscrete_1 else param_primitives_list[0][2]
 
-        k_1 = torch.tensor(float(constant_1), dtype=torch.float, requires_grad=True)
+        k_1 = torch.tensor(float(constant_1), dtype=torch.float, requires_grad=False)
         f1 = self.stlcg_term_helper(variable_1, comparator_1, constant_1)
 
         isDiscrete_2 = len(param_primitives_list[1]) == 1
@@ -348,7 +348,7 @@ class Parser:
         comparator_2 = '=' if isDiscrete_2 else param_primitives_list[1][1]
         constant_2 = 1 if isDiscrete_2 else param_primitives_list[1][2]
 
-        k_2 = torch.tensor(float(constant_2), dtype=torch.float, requires_grad=True)
+        k_2 = torch.tensor(float(constant_2), dtype=torch.float, requires_grad=False)
         f2 = self.stlcg_term_helper(variable_2, comparator_2, constant_2)
 
         f3 = stlcg.Eventually(subformula=f1, interval=self.stlcg_interval_helper(interval_list[0][0], interval_list[0][1]))
@@ -414,94 +414,3 @@ class Parser:
 
 
       return stl_semantics
-
-"""#Usage Example"""
-
-my_parser = Parser()
-
-########## Simple Print Example ##########
-
-some_test_strings = [ #see syntax in the paper
-    "Existence[0,2](a[t]>1)",
-    "Response[0,m][5,8](a[t]>2, dis(d[t]))"
-]
-
-for t in some_test_strings:
-  print(f"Text: {my_parser.transform_declare2text(t)}")
-  print(f"STLCG: {my_parser.transform_declare2STLCG(t)}")
-  print()
-
-
-
-
-########## Integration with STLCG Example 1 ##########
-my_data = [0.2, 0.99, 0.6, 0.3, 0.99, 0.6]
-my_array = np.array(my_data)
-a_np = my_array.reshape([1, my_array.shape[0],1])
-a = torch.tensor(a_np, requires_grad=False)   #for all of these lines no idea what I'm doing, just copied from stlcg examples ;)
-input = (a.flip(1))
-pscale = 1
-scale = 0
-
-#start of actual example
-formula_str="Existence[0,m](a[t]>1)"
-formula = my_parser.transform_declare2STLCG(formula_str)
-print(formula_str)
-print(formula)
-print(formula.robustness_trace(input, pscale=pscale, scale=scale).flip(1))
-print()
-
-
-########## Integration with STLCG Example 2 ##########
-formula_str="Response[0,m][5,8](a[t]>1,dis(d[t]))" #note that "dis(d[t])" is checking if d==1
-formula = my_parser.transform_declare2STLCG(formula_str)
-print(formula_str)
-print(formula)
-print(formula.robustness_trace((input,input), pscale=pscale, scale=scale).flip(1)) #for stlcg note that you have to provide a tuple as input here
-
-"""#Tests (to be continued)"""
-
-import unittest
-
-class TestParser(unittest.TestCase):
-
-    def setUp(self):
-        self.my_parser = Parser()
-
-    def test_existence(self):
-        input_str = "Existence[0,m](a[t] > 100)"
-        expected_output = "F[0,m](a[t] > 100)"
-        self.assertEqual(self.my_parser.transform_declare2text(input_str), expected_output)
-
-    def test_period_existence(self):
-        input_str = "PeriodExistence[0,1][0,2](a[t] > 10)"
-        expected_output = "F[0,1](G[0,2] a[t] > 10)"
-        self.assertEqual(self.my_parser.transform_declare2text(input_str), expected_output)
-
-    def test_response(self):
-        input_str = "Response[0,1][0,2](a[t] > 10, b[t] < 50)"
-        expected_output = "G[0,1](a[t] > 10 -> F[0,2](b[t] < 50))"
-        self.assertEqual(self.my_parser.transform_declare2text(input_str), expected_output)
-
-    def test_response_with_discrete(self):
-        input_str = "Response[0,1][0,2](dis(d[t]), b[t] < 50)"
-        expected_output = "G[0,1](dis(d[t]) -> F[0,2](b[t] < 50))"
-        self.assertEqual(self.my_parser.transform_declare2text(input_str), expected_output)
-
-
-    def test_error_onexistence_with_two_parameters(self):
-        input_str = "EXISTENCE[0,m](a[t]>100, b[t] < 50)"
-        with self.assertRaises(ValueError):
-            self.my_parser.transform_declare2text(input_str)
-
-
-    def test_error_on_response_with_one_interval(self):
-        input_str = "Response[0,m](a[t]>100, b[t] < 50)"
-        with self.assertRaises(ValueError):
-            self.my_parser.transform_declare2text(input_str)
-
-
-
-# Run the tests
-#if __name__ == "__main__":
-#    unittest.main(argv=[''], exit=False)

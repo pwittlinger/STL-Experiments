@@ -21,7 +21,7 @@ pylab.rcParams.update(params)
 
 def runTimeAnalysis(allDirs = os.listdir("./outputs/experiments"), formulas = ["Absence Test 1","Absence Test 2","Absence Test 3","Response Test 1","Response Test 2","Response Test 3"]):
 
-    areFiles = [os.path.join(os.path.abspath(os.path.curdir),os.path.join("experiments",f)) for f in allDirs if (os.path.isfile(os.path.join(os.path.abspath(os.path.curdir),os.path.join("experiments",f))) == True)]
+    areFiles = [os.path.join(os.path.abspath(os.path.curdir),os.path.join("outputs/experiments",f)) for f in allDirs if (os.path.isfile(os.path.join(os.path.abspath(os.path.curdir),os.path.join("outputs/experiments",f))) == True)]
     fNames = [f.split("\\")[-1] for f in areFiles]
     head = ["runs", "avgTime", "std", "nTrials", "nObs", "timePerObs"]
 
@@ -59,9 +59,12 @@ def runTimeAnalysis(allDirs = os.listdir("./outputs/experiments"), formulas = ["
 
     for i in range(2):
         axleg = []
-        for j in range(int(len(formulas)/2)):
-            axleg.append(f"{formulas[(j+i*3)]}")
-            d = pd.read_csv(areFiles[(j+i*3)], sep=";", header=None, names=head)
+        lenForm = int(len(formulas)/2)
+        for j in range(lenForm):
+            #axleg.append(f"{formulas[(j+i*3)]}")
+            #d = pd.read_csv(areFiles[(j+i*3)], sep=";", header=None, names=head)
+            axleg.append(f"{formulas[(j+i*lenForm)]}")
+            d = pd.read_csv(areFiles[(j+i*lenForm)], sep=";", header=None, names=head)
             axs_[i].plot(d.loc[:,["nObs", "avgTime"]].groupby(by="nObs").mean().sort_values(by="nObs").index.values, d.loc[:,["nObs", "avgTime"]].groupby(by="nObs").mean().sort_values(by="nObs").values, marker=".", markersize=15, linewidth=3)
             axs_[i].set_ylabel("Time in Seconds")
             axs_[i].grid(True)
@@ -102,4 +105,5 @@ if __name__=="__main__":
     "Response[0,m],[0,1](|x’[t]| > 500, dis(bD)",
     "Response[0,m],[0,60](h[t] < 40, G[0,10](x[t])>300)"
 ]
-    runTimeAnalysis(formulas=formulas)
+    dirs = os.path.join(os.path.join(dname, "outputs"), "experiments")
+    runTimeAnalysis(allDirs=os.listdir(dirs), formulas=formulas)

@@ -185,7 +185,8 @@ if __name__ == "__main__":
     n_obs = [60, 60*60, 60*60*24, 60*60*24*2, 60*60*24*3, 60*60*24*5, 60*60*24*7, 60*60*24*10, 10**6]
     n_experiments = 1
 
-    intervalLengths = [1,2,5,10,50]
+    #intervalLengths = [",m]", 1,2,5,10,50]
+    intervalLengths = [",m]"]
     inSignals = [["co2"], ["co2", "co2"], ["co2", "temp"], ["co2", "co2"], ["co2Gradient", "breakDown"]]
     expNames = ["Absence1Loop", "Absence2Loop", "Absence3Loop", "Response1Loop", "Response2Loop"]
     colmap = {"co2":2,
@@ -210,6 +211,22 @@ if __name__ == "__main__":
 
     stlPars = Parser()
 
+    exprmnts= []
+    for e in singleExperiments:
+        print(e)
+        forms = [stlPars.transform_declare2STLCG(se) for se in e]
+        if len(forms)>1:
+            exprmnts.append(stlcg.And(forms[0], forms[1]))
+        else:
+            exprmnts.append(forms[0])
+
+    for o,p,q in zip(exprmnts, inSignals, expNames):
+        print(o,p,q)
+            
+        for nobs in n_obs:
+            runExperiment(formula = o, data=dataSensor0, nobs=nobs, inSign=p, experimentName=q+f"_m")
+
+    """
     for itv_ in intervalLengths:
 
         exprmnts= []
@@ -226,11 +243,11 @@ if __name__ == "__main__":
             
             for nobs in n_obs:
                 runExperiment(formula = o, data=dataSensor0, nobs=nobs, inSign=p, experimentName=q+f"_{itv_}")
-
+    """
     ############################################################################
     ######### Response Test 1 : Unbounded Interval on same Input Signal
     ############################################################################                
-
+    
     # The last / nested Response formula is not handled by the Parser. That's why I'm creating that manually now.
 
     c = torch.tensor(40.0, dtype=torch.float16, requires_grad=False)
@@ -242,10 +259,13 @@ if __name__ == "__main__":
 
     formula = stlcg.Implies(subformula1=ϕHum, subformula2=stlcg.Eventually(stlcg.Always(ϕCo2, interval=[0,10]), interval=[0,60]))
 
-    [runExperiment(formula, dataSensor0, nobs, ["hum", "co2"], "Response3") for nobs in n_obs]
+    # Run regular experiment
+    [runExperiment(formula, dataSensor0, nobs, ["humidity", "co2"], "Response3") for nobs in n_obs]
 
-    for itv_ in intervalLengths:
-        formula = stlcg.Implies(subformula1=ϕHum, subformula2=stlcg.Eventually(stlcg.Always(ϕCo2, interval=[0,itv_]), interval=[0,60]))
-        [runExperiment(formula, dataSensor0, nobs, ["hum", "co2"], f"Response3_{itv_}") for nobs in n_obs]
-
+    """
+    if len(intervalLengths)>1:
+        for itv_ in intervalLengths:
+            formula = stlcg.Implies(subformula1=ϕHum, subformula2=stlcg.Eventually(stlcg.Always(ϕCo2, interval=[0,itv_]), interval=[0,60]))
+            [runExperiment(formula, dataSensor0, nobs, ["humidity", "co2"], f"Response3_{itv_}") for nobs in n_obs]
+    """
     print(True)
